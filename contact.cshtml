@@ -11,16 +11,20 @@
         subject = Request["txtSubject"];
         message = Request["txtMessage"];
 
-        var db = Database.Open("Lesson2");
+        //var db = Database.Open("Lesson2");
 
-        db.Execute("Insert Into ContactLog(Name, Email, Subject, Message, DateSent) Values (@0, @1, @2, @3, @4)", name, email, subject, message, DateTime.Now);
+        using (var repo = new ContactLogRepository("Lesson2")){
+            repo.Insert(name, email, subject, message);
+        }
+
+        //db.Execute("Insert Into ContactLog(Name, Email, Subject, Message, DateSent) Values (@0, @1, @2, @3, @4)", name, email, subject, message, DateTime.Now);
 
         //using (var repo = new ContactLogRepository("Lesson02"))
         //{
         //    repo.Insert(name, email, subject, message);
         //}
 
-        //Response.Redirect("success.cshtml");
+        Response.Redirect("success.cshtml");
     }
 }
 
